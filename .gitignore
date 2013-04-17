@@ -1,6 +1,3 @@
-/Videohog-Mac/build/
-/Videohog-iOS/build/
-/Videohog2-Mac/build
 build/
 .idea/
 *.zargo~
