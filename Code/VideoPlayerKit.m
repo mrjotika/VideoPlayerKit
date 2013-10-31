@@ -188,7 +188,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
     }
 }
 
-- (void)playVideoWithTitle:(NSString *)title URL:(NSURL *)url videoID:(NSString *)videoID shareURL:(NSURL *)shareURL isStreaming:(BOOL)streaming playInFullScreen:(BOOL)playInFullScreen
+- (void)playVideoWithTitle:(NSString *)title asset:(AVURLAsset *)asset videoID:(NSString *)videoID shareURL:(NSURL *)shareURL isStreaming:(BOOL)streaming playInFullScreen:(BOOL)playInFullScreen
 {
     [self.videoPlayer pause];
     
@@ -198,7 +198,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
     [self showControls];
     
     NSString *vidID = videoID ?: @"";
-    _currentVideoInfo = @{ @"title": title ?: @"", @"videoID": vidID, @"isStreaming": @(streaming), @"shareURL": shareURL ?: url};
+    _currentVideoInfo = @{ @"title": title ?: @"", @"videoID": vidID, @"isStreaming": @(streaming), @"shareURL": shareURL ?: asset.URL};
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kVideoPlayerVideoChangedNotification
                                                         object:self
@@ -221,7 +221,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
                                      MPMediaItemPropertyTitle: title,
      }];
     
-    [self setURL:url];
+    [self setAsset:asset];
     
     [self syncPlayPauseButtons];
     
@@ -443,9 +443,10 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
     return YES;
 }
 
-- (void)setURL:(NSURL *)url
+- (void)setAsset:(AVURLAsset *)asset
 {
-    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
+    self->_asset = asset;
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:self.asset];
     
     [playerItem addObserver:self
                  forKeyPath:@"status"
@@ -525,7 +526,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
                 [self removeObserversFromVideoPlayerItem];
                 [self removePlayerTimeObservers];
                 self.videoPlayer = nil;
-                NSLog(@"failed");
+                NSLog(@"videoplayer kit failed");
                 break;
         }
     } else if ([keyPath isEqualToString:@"playbackBufferEmpty"] && _videoPlayer.currentItem.playbackBufferEmpty) {
