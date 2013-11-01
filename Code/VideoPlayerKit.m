@@ -763,7 +763,6 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 
 - (void)syncPlayPauseButtons
 {
-    [_videoPlayerView.playPauseButton setBackgroundColor:[UIColor greenColor]];
     if ([self isPlaying]) {
         [_videoPlayerView.playPauseButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
     } else {
