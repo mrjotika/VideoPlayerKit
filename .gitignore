@@ -1,11 +1,19 @@
+# build files #
+###############
 build/
 .idea/
 *.zargo~
+Pods/
+Podfile.lock
+
+# Eclipse #
+###########
+.metadata/
+
 
 # Xcode files #
 ###############
-Breakpoints.xcbkptlist
-UserInterfaceState.xcuserstate
+xcuserdata/
 
 # Compiled source #
 ###################
