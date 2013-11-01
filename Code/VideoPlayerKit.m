@@ -30,6 +30,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 @property (nonatomic, strong) FullScreenViewController *fullscreenViewController;
 @property (nonatomic) CGRect previousBounds;
 @property (nonatomic) BOOL hideTopViewWithControls;
+@property (readonly, nonatomic, strong) AVPlayerItem *playerItem;
 
 @end
 
@@ -154,9 +155,9 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if ([touch.view isDescendantOfView:self.videoPlayerView.playerControlBar] || [touch.view isDescendantOfView:self.videoPlayerView.shareButton]) {
-        return NO;
-    }
+//    if ([touch.view isDescendantOfView:self.videoPlayerView.playerControlBar] || [touch.view isDescendantOfView:self.videoPlayerView.shareButton]) {
+//        return NO;
+//    }
     return YES;
 }
 
@@ -445,31 +446,30 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 
 - (void)setAsset:(AVURLAsset *)asset
 {
-    self->_asset = asset;
-    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:self.asset];
+    self->_playerItem = [[AVPlayerItem alloc] initWithAsset:asset];
     
-    [playerItem addObserver:self
+    [self.playerItem addObserver:self
                  forKeyPath:@"status"
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     
-    [playerItem addObserver:self
+    [self.playerItem addObserver:self
                  forKeyPath:@"playbackBufferEmpty"
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     
-    [playerItem addObserver:self
+    [self.playerItem addObserver:self
                  forKeyPath:@"playbackLikelyToKeepUp"
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     
-    [playerItem addObserver:self
+    [self.playerItem addObserver:self
                  forKeyPath:@"loadedTimeRanges"
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     
     if (!self.videoPlayer) {
-        _videoPlayer = [AVPlayer playerWithPlayerItem:playerItem];
+        _videoPlayer = [AVPlayer playerWithPlayerItem:self.playerItem];
         [_videoPlayer setAllowsAirPlayVideo:YES];
         [_videoPlayer setUsesAirPlayVideoWhileAirPlayScreenIsActive:YES];
         
@@ -480,7 +480,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         [_videoPlayerView setPlayer:_videoPlayer];
     } else {
         [self removeObserversFromVideoPlayerItem];
-        [self.videoPlayer replaceCurrentItemWithPlayerItem:playerItem];
+        [self.videoPlayer replaceCurrentItemWithPlayerItem:self.playerItem];
     }
     
     // iOS 5
@@ -522,11 +522,16 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
                 playWhenReady = YES;
                 break;
             case AVPlayerStatusFailed:
-                // TODO:
+                if (nil!=self.videoPlayer.error) {
+                    NSLog(@"videoplayer kit failed with AVPlayer: %@", self.videoPlayer.error);
+                    
+                } else {
+                    NSLog(@"videoplayer kit failed with AVPlayerItem: %@", self.playerItem.error);
+                }
+                
                 [self removeObserversFromVideoPlayerItem];
                 [self removePlayerTimeObservers];
                 self.videoPlayer = nil;
-                NSLog(@"videoplayer kit failed");
                 break;
         }
     } else if ([keyPath isEqualToString:@"playbackBufferEmpty"] && _videoPlayer.currentItem.playbackBufferEmpty) {
@@ -758,6 +763,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 
 - (void)syncPlayPauseButtons
 {
+    [_videoPlayerView.playPauseButton setBackgroundColor:[UIColor greenColor]];
     if ([self isPlaying]) {
         [_videoPlayerView.playPauseButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
     } else {
