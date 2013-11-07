@@ -134,7 +134,7 @@
                                  constrainedToSize:CGSizeMake(insetBounds.size.width, CGFLOAT_MAX)
                                      lineBreakMode:UILineBreakModeWordWrap];
         
-        self.autoresizingMask = UIViewAutoresizingNone;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         [_titleLabel setFrame:CGRectMake(insetBounds.origin.x + self.padding,
                                          insetBounds.origin.y,
@@ -266,6 +266,11 @@
     if (object == _airplayButton && [keyPath isEqualToString:@"alpha"]) {
         [self setNeedsLayout];
     }
+}
+
+- (void)removeFromSuperview
+{
+    [super removeFromSuperview];
 }
 
 @end
