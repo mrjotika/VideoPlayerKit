@@ -22,7 +22,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 @property (readwrite) BOOL seekToZeroBeforePlay;
 @property (readwrite) BOOL rotationIsLocked;
 @property (readwrite) BOOL playerIsBuffering;
-@property (nonatomic, weak) UIViewController *containingViewController;
+@property (nonatomic, weak) UIView *containingView;
 @property (nonatomic, weak) UIView *topView;
 @property (readwrite) BOOL fullScreenModeToggled;
 @property (nonatomic) BOOL isAlwaysFullscreen;
@@ -69,10 +69,10 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
     }
 }
 
-- (id)initWithContainingViewController:(UIViewController *)containingViewController optionalTopView:(UIView *)topView hideTopViewWithControls:(BOOL)hideTopViewWithControls
+- (id)initWithContainingView:(UIView *)containingViewController optionalTopView:(UIView *)topView hideTopViewWithControls:(BOOL)hideTopViewWithControls
 {
     if ((self = [super init])) {
-        self.containingViewController = containingViewController;
+        self.containingView = containingViewController;
         self.hideTopViewWithControls = hideTopViewWithControls;
         self.topView = topView;
     }
@@ -80,11 +80,11 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
     return self;
 }
 
-+ (VideoPlayerKit *)videoPlayerWithContainingViewController:(UIViewController *)containingViewController
++ (VideoPlayerKit *)videoPlayerWithContainingView:(UIView *)containingViewController
                                                        optionalTopView:(UIView *)topView
                                                hideTopViewWithControls:(BOOL)hideTopViewWithControls
 {
-    VideoPlayerKit *videoPlayer = [[VideoPlayerKit alloc] initWithContainingViewController:containingViewController
+    VideoPlayerKit *videoPlayer = [[VideoPlayerKit alloc] initWithContainingView:containingViewController
                                                                            optionalTopView:topView
                                                                    hideTopViewWithControls:hideTopViewWithControls];
     
@@ -94,7 +94,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 - (void)setControlsEdgeInsets:(UIEdgeInsets)controlsEdgeInsets
 {
     if (!self.videoPlayerView) {
-        self.videoPlayerView = [[VideoPlayerView alloc] initWithFrame:self.containingViewController.view.bounds];
+        self.videoPlayerView = [[VideoPlayerView alloc] initWithFrame:self.containingView.bounds];
     }
     _controlsEdgeInsets = controlsEdgeInsets;
     self.videoPlayerView.controlsEdgeInsets = _controlsEdgeInsets;
@@ -123,7 +123,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 - (void)loadView
 {
     if (!self.videoPlayerView) {
-        self.videoPlayerView = [[VideoPlayerView alloc] initWithFrame:self.containingViewController.view.bounds];
+        self.videoPlayerView = [[VideoPlayerView alloc] initWithFrame:self.containingView.bounds];
     }
     self.view = self.videoPlayerView;
 }
@@ -231,7 +231,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         [self launchFullScreen];
     } else {
         self.isAlwaysFullscreen = NO;
-        [self.containingViewController.view addSubview:self.videoPlayerView];
+        [self.containingView addSubview:self.videoPlayerView];
     }
 }
 
@@ -339,7 +339,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         [self syncFullScreenButton:self.interfaceOrientation];
         
         if (self.topView) {
-            [self.containingViewController.view addSubview:self.topView];
+            [self.containingView addSubview:self.topView];
         }
         
         if (self.isAlwaysFullscreen) {
@@ -371,7 +371,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
                              }];
             
             [self.videoPlayerView removeFromSuperview];
-            [self.containingViewController.view addSubview:self.videoPlayerView];
+            [self.containingView addSubview:self.videoPlayerView];
         }
         
         
