@@ -342,40 +342,39 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
             [self.containingView addSubview:self.topView];
         }
         
-        if (self.isAlwaysFullscreen) {
-            [UIView animateWithDuration:0.45f
-                                  delay:0.0f
-                                options:UIViewAnimationCurveLinear
-                             animations:^{
-                                 self.videoPlayerView.frame = self.previousBounds;
-                             }
-                             completion:^(BOOL success){
-                                 
-                                 if (showShareOptions) {
-                                     [self presentShareOptions];
-                                 }
-                                 
-                                 [self.videoPlayerView removeFromSuperview];
-                             }];
-        } else {
-            [UIView animateWithDuration:0.45f
-                                  delay:0.0f
-                                options:UIViewAnimationCurveLinear
-                             animations:^{
-                                 self.videoPlayerView.frame = self.previousBounds;
-                             }
-                             completion:^(BOOL success){
-                                 if (showShareOptions) {
-                                     [self presentShareOptions];
-                                 }
-                             }];
-            
-            [self.videoPlayerView removeFromSuperview];
-            [self.containingView addSubview:self.videoPlayerView];
-        }
-        
-        
         [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:self.isAlwaysFullscreen completion:^{
+            
+            if (self.isAlwaysFullscreen) {
+                [UIView animateWithDuration:0.45f
+                                      delay:0.0f
+                                    options:UIViewAnimationCurveLinear
+                                 animations:^{
+                                     self.videoPlayerView.frame = self.previousBounds;
+                                 }
+                                 completion:^(BOOL success){
+                                     
+                                     if (showShareOptions) {
+                                         [self presentShareOptions];
+                                     }
+                                     
+                                     [self.videoPlayerView removeFromSuperview];
+                                 }];
+            } else {
+                [UIView animateWithDuration:0.45f
+                                      delay:0.0f
+                                    options:UIViewAnimationCurveLinear
+                                 animations:^{
+                                     self.videoPlayerView.frame = self.previousBounds;
+                                 }
+                                 completion:^(BOOL success){
+                                     if (showShareOptions) {
+                                         [self presentShareOptions];
+                                     }
+                                 }];
+                
+                [self.videoPlayerView removeFromSuperview];
+                [self.containingView addSubview:self.videoPlayerView];
+            }
 
             if (!self.isAlwaysFullscreen) {
                 [self showControls];
