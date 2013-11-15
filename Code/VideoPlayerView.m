@@ -149,16 +149,22 @@
 
         [_shareButton setFrame:CGRectMake(insetBounds.size.width - shareImage.size.width, insetBounds.origin.y, shareImage.size.width, shareImage.size.height)];
     } else {
+        
+        CGFloat topBarPadding=0;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            topBarPadding = 20;
+        }
+        
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
         [_titleLabel setFrame:CGRectMake(insetBounds.origin.x + self.padding,
-                                         insetBounds.origin.y,
+                                         insetBounds.origin.y + topBarPadding,
                                          insetBounds.size.width,
                                          titleLabelSize.height)];
         
         [_airplayIsActiveView setFrame:bounds];
         
-        [_shareButton setFrame:CGRectMake(insetBounds.size.width - shareImage.size.width, insetBounds.origin.y, shareImage.size.width, shareImage.size.height)];
+        [_shareButton setFrame:CGRectMake(insetBounds.size.width - shareImage.size.width, insetBounds.origin.y + topBarPadding, shareImage.size.width, shareImage.size.height)];
     }
     
     [_playerControlBar setFrame:CGRectMake(bounds.origin.x,
