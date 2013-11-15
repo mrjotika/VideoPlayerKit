@@ -393,6 +393,9 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 {
     [self showControls];
     
+    if ([self.delegate respondsToSelector:@selector(setWillFullScreenToggle:)]) {
+        [self.delegate setWillFullScreenToggle:(NO==self.fullScreenModeToggled)];
+    }
     if (self.fullScreenModeToggled) {
         [self minimizeVideo];
     } else {

@@ -16,6 +16,7 @@
 @property (readonly, strong) UIView *playerControlBar;
 @property (readonly, strong) UIButton *playPauseButton;
 @property (readonly, strong) UIButton *fullScreenButton;
+@property (readwrite, strong) UIButton *customButton;
 @property (readonly, strong) UISlider *videoScrubber;
 @property (readonly, strong) UILabel *currentPositionLabel;
 @property (readonly, strong) UILabel *timeLeftLabel;

@@ -182,10 +182,24 @@
                                           PLAYER_CONTROL_BAR_HEIGHT,
                                           PLAYER_CONTROL_BAR_HEIGHT)];
     
-    CGRect fullScreenButtonFrame = CGRectMake(bounds.size.width - PLAYER_CONTROL_BAR_HEIGHT,
-                                              0,
-                                              PLAYER_CONTROL_BAR_HEIGHT,
-                                              PLAYER_CONTROL_BAR_HEIGHT);
+    CGFloat rightPadding;
+    if (self.customButton) {
+        rightPadding = PLAYER_CONTROL_BAR_HEIGHT*2;
+        
+        CGRect customButtonFrame = CGRectMake(bounds.size.width - PLAYER_CONTROL_BAR_HEIGHT,
+                                                  0,
+                                                  PLAYER_CONTROL_BAR_HEIGHT,
+                                                  PLAYER_CONTROL_BAR_HEIGHT);
+        [_customButton setFrame:customButtonFrame];
+        
+    } else {
+        rightPadding = PLAYER_CONTROL_BAR_HEIGHT;
+    }
+    
+    CGRect fullScreenButtonFrame = CGRectMake(bounds.size.width - rightPadding,
+                                       0,
+                                       PLAYER_CONTROL_BAR_HEIGHT,
+                                       PLAYER_CONTROL_BAR_HEIGHT);
     [_fullScreenButton setFrame:fullScreenButtonFrame];
     
     CGRect routeButtonRect = CGRectZero;
@@ -206,7 +220,7 @@
                                                ALIGNMENT_FUZZ,
                                                CURRENT_POSITION_WIDTH,
                                                PLAYER_CONTROL_BAR_HEIGHT)];
-    [_timeLeftLabel setFrame:CGRectMake(bounds.size.width - PLAYER_CONTROL_BAR_HEIGHT - TIME_LEFT_WIDTH
+    [_timeLeftLabel setFrame:CGRectMake(bounds.size.width - rightPadding - TIME_LEFT_WIDTH
                                         - routeButtonRect.size.width,
                                         ALIGNMENT_FUZZ,
                                         TIME_LEFT_WIDTH,
@@ -214,13 +228,19 @@
     
     CGRect scrubberRect = CGRectMake(PLAYER_CONTROL_BAR_HEIGHT + CURRENT_POSITION_WIDTH,
                                      0,
-                                     bounds.size.width - (PLAYER_CONTROL_BAR_HEIGHT * 2) - TIME_LEFT_WIDTH -
+                                     bounds.size.width - (PLAYER_CONTROL_BAR_HEIGHT + rightPadding) - TIME_LEFT_WIDTH -
                                      CURRENT_POSITION_WIDTH - (TIME_LEFT_WIDTH - CURRENT_POSITION_WIDTH)
                                      - routeButtonRect.size.width,
                                      PLAYER_CONTROL_BAR_HEIGHT);
     
     [_videoScrubber setFrame:scrubberRect];
     [_progressView setFrame:[_videoScrubber trackRectForBounds:scrubberRect]];
+}
+
+- (void)setCustomButton:(UIButton *)customButton
+{
+    _customButton = customButton;
+    [_playerControlBar addSubview:_customButton];
 }
 
 - (void)setTitle:(NSString *)title

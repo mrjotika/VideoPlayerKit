@@ -12,6 +12,9 @@ extern NSString * const kTrackEventVideoComplete;
 @protocol VideoPlayerDelegate <NSObject>
 
 @optional
+#pragma mark Called before toggle
+@property (nonatomic) BOOL willFullScreenToggle;
+#pragma mark Called after toggle
 @property (nonatomic) BOOL fullScreenToggled;
 - (void)trackEvent:(NSString *)event videoID:(NSString *)videoID title:(NSString *)title;
 
