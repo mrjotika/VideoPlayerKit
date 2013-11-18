@@ -100,9 +100,9 @@
         _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         [self addSubview:_activityIndicator];
 
-        _shareButton = [[UIButton alloc] init];
-        [_shareButton setImage:[UIImage imageNamed:@"share-button"] forState:UIControlStateNormal];
-        [_shareButton setShowsTouchWhenHighlighted:YES];
+//        _shareButton = [[UIButton alloc] init];
+//        [_shareButton setImage:[UIImage imageNamed:@"share-button"] forState:UIControlStateNormal];
+//        [_shareButton setShowsTouchWhenHighlighted:YES];
         
         [self addSubview:_shareButton];
         self.controlsEdgeInsets = UIEdgeInsetsZero;
