@@ -24,6 +24,7 @@
 @property (readonly, strong) UIButton *shareButton;
 @property (readwrite) UIEdgeInsets controlsEdgeInsets;
 @property (nonatomic, readwrite, getter=isFullscreen) BOOL fullscreen;
+@property (nonatomic, readonly, strong) UIToolbar *statusBarOverlay;
 
 @property (readonly, strong) UIActivityIndicatorView *activityIndicator;
 

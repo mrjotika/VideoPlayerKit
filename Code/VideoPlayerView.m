@@ -45,7 +45,7 @@
         
         _playerControlBar = [[UIView alloc] init];
         [_playerControlBar setOpaque:NO];
-        [_playerControlBar setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.8]];
+        [_playerControlBar setBackgroundColor:[[UIColor grayColor] colorWithAlphaComponent:0.8]];
         
         _playPauseButton = [[UIButton alloc] init];
         [_playPauseButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
@@ -103,9 +103,17 @@
 //        _shareButton = [[UIButton alloc] init];
 //        [_shareButton setImage:[UIImage imageNamed:@"share-button"] forState:UIControlStateNormal];
 //        [_shareButton setShowsTouchWhenHighlighted:YES];
-        
-        [self addSubview:_shareButton];
+//        
+//        [self addSubview:_shareButton];
         self.controlsEdgeInsets = UIEdgeInsetsZero;
+        
+        CGRect spacingForStatusBar;
+        spacingForStatusBar.size.height = 20;
+        spacingForStatusBar.size.width = self.frame.size.width;
+        _statusBarOverlay = [[UIToolbar alloc] initWithFrame:spacingForStatusBar];
+        self.statusBarOverlay.alpha = .5;
+        self.statusBarOverlay.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self addSubview:self.statusBarOverlay];
     }
     return self;
 }

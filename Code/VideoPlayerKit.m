@@ -267,6 +267,10 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 - (void)launchFullScreen
 {
     if (!self.fullScreenModeToggled) {
+        if ([self.delegate respondsToSelector:@selector(setWillFullScreenToggle:)]) {
+            [self.delegate setWillFullScreenToggle:(NO==self.fullScreenModeToggled)];
+        }
+        
         self.fullScreenModeToggled = YES;
         
         if (!self.isAlwaysFullscreen) {
@@ -333,6 +337,10 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 - (void)minimizeVideo
 {
     if (self.fullScreenModeToggled) {
+        if ([self.delegate respondsToSelector:@selector(setWillFullScreenToggle:)]) {
+            [self.delegate setWillFullScreenToggle:(NO==self.fullScreenModeToggled)];
+        }
+        
         self.fullScreenModeToggled = NO;
         [self.videoPlayerView setFullscreen:NO];
         [self hideControlsAnimated:NO];
@@ -393,9 +401,6 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
 {
     [self showControls];
     
-    if ([self.delegate respondsToSelector:@selector(setWillFullScreenToggle:)]) {
-        [self.delegate setWillFullScreenToggle:(NO==self.fullScreenModeToggled)];
-    }
     if (self.fullScreenModeToggled) {
         [self minimizeVideo];
     } else {
@@ -595,6 +600,9 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         self.videoPlayerView.playerControlBar.alpha = 1.0;
         self.videoPlayerView.titleLabel.alpha = 1.0;
         _videoPlayerView.shareButton.alpha = 1.0;
+        if (self.fullScreenModeToggled) {
+            self.videoPlayerView.statusBarOverlay.alpha = 1.0;
+        }
     } completion:nil];
     
     if (self.fullScreenModeToggled) {
@@ -619,6 +627,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
             self.videoPlayerView.playerControlBar.alpha = 0;
             self.videoPlayerView.titleLabel.alpha = 0;
             _videoPlayerView.shareButton.alpha = 0;
+            self.videoPlayerView.statusBarOverlay.alpha = 0;
         } completion:nil];
         
         if (self.fullScreenModeToggled) {
@@ -630,6 +639,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         self.videoPlayerView.playerControlBar.alpha = 0;
         self.videoPlayerView.titleLabel.alpha = 0;
         _videoPlayerView.shareButton.alpha = 0;
+        self.videoPlayerView.statusBarOverlay.alpha = 0;
         if (self.fullScreenModeToggled) {
             [[UIApplication sharedApplication] setStatusBarHidden:YES
                                                     withAnimation:UIStatusBarAnimationNone];
