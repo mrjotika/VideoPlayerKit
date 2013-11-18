@@ -167,6 +167,10 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
     if (self.fullScreenModeToggled) {
         BOOL isHidingPlayerControls = self.videoPlayerView.playerControlBar.alpha == 0;
         [[UIApplication sharedApplication] setStatusBarHidden:isHidingPlayerControls withAnimation:UIStatusBarAnimationNone];
+        if (NO==isHidingPlayerControls) {
+            self.videoPlayerView.statusBarOverlay.alpha = 0.5;
+        }
+        
     } else {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     }
