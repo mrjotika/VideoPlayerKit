@@ -601,7 +601,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         self.videoPlayerView.titleLabel.alpha = 1.0;
         _videoPlayerView.shareButton.alpha = 1.0;
         if (self.fullScreenModeToggled) {
-            self.videoPlayerView.statusBarOverlay.alpha = 1.0;
+            self.videoPlayerView.statusBarOverlay.alpha = 0.5;
         }
     } completion:nil];
     

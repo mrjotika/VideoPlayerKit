@@ -111,7 +111,7 @@
         spacingForStatusBar.size.height = 20;
         spacingForStatusBar.size.width = self.frame.size.width;
         _statusBarOverlay = [[UIToolbar alloc] initWithFrame:spacingForStatusBar];
-        self.statusBarOverlay.alpha = .5;
+        self.statusBarOverlay.alpha = 0;
         self.statusBarOverlay.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:self.statusBarOverlay];
     }
