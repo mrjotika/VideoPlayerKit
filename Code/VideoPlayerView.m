@@ -107,10 +107,7 @@
 //        [self addSubview:_shareButton];
         self.controlsEdgeInsets = UIEdgeInsetsZero;
         
-        CGRect spacingForStatusBar;
-        spacingForStatusBar.size.height = 20;
-        spacingForStatusBar.size.width = self.frame.size.width;
-        _statusBarOverlay = [[UIToolbar alloc] initWithFrame:spacingForStatusBar];
+        _statusBarOverlay = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 20)];
         self.statusBarOverlay.alpha = 0;
         self.statusBarOverlay.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:self.statusBarOverlay];
