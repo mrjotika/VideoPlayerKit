@@ -17,6 +17,7 @@
 @property (readonly, strong) UIButton *playPauseButton;
 @property (readonly, strong) UIButton *fullScreenButton;
 @property (nonatomic, readwrite, strong) UIButton *customButton;
+@property (nonatomic, readwrite, strong) UILabel *extraStats;
 @property (readonly, strong) UISlider *videoScrubber;
 @property (readonly, strong) UILabel *currentPositionLabel;
 @property (readonly, strong) UILabel *timeLeftLabel;

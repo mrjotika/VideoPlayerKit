@@ -201,6 +201,13 @@
         rightPadding = PLAYER_CONTROL_BAR_HEIGHT;
     }
     
+    if (self.extraStats) {
+        self.extraStats.frame = CGRectMake(bounds.size.width - (PLAYER_CONTROL_BAR_HEIGHT*2.5),
+                                           bounds.size.height - (PLAYER_CONTROL_BAR_HEIGHT*2),
+                                           (PLAYER_CONTROL_BAR_HEIGHT*2.5),
+                                           (PLAYER_CONTROL_BAR_HEIGHT));
+    }
+    
     CGRect fullScreenButtonFrame = CGRectMake(bounds.size.width - rightPadding,
                                        0,
                                        PLAYER_CONTROL_BAR_HEIGHT,
@@ -246,6 +253,12 @@
 {
     _customButton = customButton;
     [_playerControlBar addSubview:_customButton];
+}
+
+- (void)setExtraStats:(UILabel *)label
+{
+    _extraStats = label;
+    [self addSubview:label];
 }
 
 - (void)setTitle:(NSString *)title

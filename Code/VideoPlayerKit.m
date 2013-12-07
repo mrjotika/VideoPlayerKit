@@ -604,6 +604,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         self.videoPlayerView.playerControlBar.alpha = 1.0;
         self.videoPlayerView.titleLabel.alpha = 1.0;
         _videoPlayerView.shareButton.alpha = 1.0;
+        self.videoPlayerView.extraStats.alpha = 1.0;
         if (self.fullScreenModeToggled) {
             self.videoPlayerView.statusBarOverlay.alpha = 0.5;
         }
@@ -630,6 +631,7 @@ NSString * const kTrackEventVideoComplete = @"Video Complete";
         [UIView animateWithDuration:0.4 animations:^{
             self.videoPlayerView.playerControlBar.alpha = 0;
             self.videoPlayerView.titleLabel.alpha = 0;
+            self.videoPlayerView.extraStats.alpha = 0;
             _videoPlayerView.shareButton.alpha = 0;
             self.videoPlayerView.statusBarOverlay.alpha = 0;
         } completion:nil];
