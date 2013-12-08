@@ -201,10 +201,17 @@
         rightPadding = PLAYER_CONTROL_BAR_HEIGHT;
     }
     
-    if (self.extraStats) {
-        self.extraStats.frame = CGRectMake(bounds.size.width - (PLAYER_CONTROL_BAR_HEIGHT*2.5),
-                                           bounds.size.height - (PLAYER_CONTROL_BAR_HEIGHT*2),
+    if (self.stats) {
+        self.stats.frame = CGRectMake(bounds.size.width - (PLAYER_CONTROL_BAR_HEIGHT*2.5),
+                                           bounds.size.height - (PLAYER_CONTROL_BAR_HEIGHT*2.5),
                                            (PLAYER_CONTROL_BAR_HEIGHT*2.5),
+                                           (PLAYER_CONTROL_BAR_HEIGHT));
+    }
+    
+    if (self.extraStats) {
+        self.extraStats.frame = CGRectMake(bounds.size.width - (PLAYER_CONTROL_BAR_HEIGHT*2),
+                                           bounds.size.height - (PLAYER_CONTROL_BAR_HEIGHT*2),
+                                           (PLAYER_CONTROL_BAR_HEIGHT*2),
                                            (PLAYER_CONTROL_BAR_HEIGHT));
     }
     
@@ -253,6 +260,12 @@
 {
     _customButton = customButton;
     [_playerControlBar addSubview:_customButton];
+}
+
+- (void)setStats:(UILabel *)label
+{
+    _stats = label;
+    [self addSubview:label];
 }
 
 - (void)setExtraStats:(UILabel *)label
